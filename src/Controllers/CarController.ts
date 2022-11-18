@@ -16,15 +16,7 @@ export default class CarController {
   }
 
   public async create() {
-    const car: ICar = {
-      model: this.req.body.model,
-      year: this.req.body.year,
-      color: this.req.body.color,
-      status: this.req.body.status || false,
-      buyValue: this.req.body.buyValue,
-      doorsQty: this.req.body.doorsQty,
-      seatsQty: this.req.body.seatsQty,
-    };
+    const car = this.req.body;
 
     try {
       const newCar = await this.service.addCar(car);
@@ -45,9 +37,21 @@ export default class CarController {
 
   public async getById() {
     const { id } = this.req.params;
+
     try {
       const car = await this.service.getById(id);
       return this.res.status(200).json(car);
+    } catch (error) {
+      this.next(error);
+    }
+  }
+
+  public async updateCar() {
+    const { id } = this.req.params;
+
+    try {
+      const carUpdate = await this.service.updateCar(id, this.req.body);
+      return this.res.status(200).json(carUpdate);
     } catch (error) {
       this.next(error);
     }
