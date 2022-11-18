@@ -1,7 +1,7 @@
 import { model, Model, models, Schema } from 'mongoose';
 
 export default abstract class AbstractODM <T> {
-  private model: Model<T>;
+  protected model: Model<T>;
   private schema: Schema;
   protected modelName: string;
 
@@ -13,5 +13,9 @@ export default abstract class AbstractODM <T> {
 
   public async create(obj: T): Promise <T> {
     return this.model.create({ ...obj });
+  }
+
+  public async getAll(): Promise <T[]> {
+    return this.model.find({});
   }
 }
