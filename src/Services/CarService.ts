@@ -28,10 +28,23 @@ export default class CarService {
   public async getById(id: string) {
     const carODM = new CarODM();
     const carId = await carODM.getAll();
-    const car = carId.find((a) => a.id === id);
+    const car = carId.find((item) => item.id === id);
+
     if (!isValidObjectId(id)) throw new HttpException('Invalid mongo id', 422);
 
     if (!car) throw new HttpException('Car not found', 404);
     return this.createCarDomain(car);
+  }
+
+  public async updateCar(id: string, car: ICar) {
+    if (!isValidObjectId(id)) throw new HttpException('Invalid mongo id', 422);
+    
+    const carODM = new CarODM();
+    const carId = await carODM.getAll();
+    const carExist = carId.some((item) => item.id === id);
+    if (!carExist) throw new HttpException('Car not found', 404);
+    
+    const carUpdate = await carODM.update(id, car);
+    return this.createCarDomain(carUpdate);
   }
 }
