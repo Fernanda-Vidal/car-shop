@@ -26,11 +26,10 @@ export default class MotorcycleService {
   }
 
   public async getById(id: string) {
-    const bikeODM = new MotorcycleODM();
-    const bikeArray = await bikeODM.getAll();
-    const motorcycle = bikeArray.find((bike) => bike.id === id);
-
     if (!isValidObjectId(id)) throw new HttpException('Invalid mongo id', 422);
+
+    const bikeODM = new MotorcycleODM();
+    const motorcycle = await bikeODM.getById(id);
 
     if (!motorcycle) throw new HttpException('Motorcycle not found', 404);
     return this.createCarDomain(motorcycle);
