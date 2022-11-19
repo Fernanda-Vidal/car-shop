@@ -2,8 +2,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { Error, Model } from 'mongoose';
 import CarService from '../../../src/Services/CarService';
-import { carInput, carList, carOutput, carUpdate, id, updateOutput } from '../../mocks/cars.service.mock';
-import ICar from '../../../src/Interfaces/ICar';
+import { carInput, carList, carOutput, carUpdate, id } from '../../mocks/cars.service.mock';
 
 describe('Testa a rota /cars', function () {
   describe('Verifica se é possível', function () {
@@ -62,6 +61,10 @@ describe('Testa a rota /cars', function () {
       } catch (error) {
         expect((error as Error).message).to.be.equal('Invalid mongo id');
       }
+    });
+
+    it('', async function () {
+      sinon.stub().resolves();
     });
   });
 });

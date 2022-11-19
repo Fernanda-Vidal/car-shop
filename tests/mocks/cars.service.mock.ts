@@ -60,18 +60,6 @@ export const carList: ICar[] = [{
   seatsQty: 5,
 }];
 
-export const updateOutput: any = {
-  _id: '63780048100ec2f0e8f854a4',
-  model: 'Fiat Marea',
-  year: 2002,
-  color: 'Black',
-  status: true,
-  buyValue: 15.99,
-  doorsQty: 4,
-  seatsQty: 5,
-  __v: 0,
-};
-
 export const id: any = { _id: '63780048100ec2f0e8f854a4' };
 
 export const carUpdate: ICar = {
