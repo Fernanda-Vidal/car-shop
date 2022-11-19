@@ -39,8 +39,7 @@ export default class MotorcycleService {
     if (!isValidObjectId(id)) throw new HttpException('Invalid mongo id', 422);
     
     const bikeODM = new MotorcycleODM();
-    const bikeId = await bikeODM.getAll();
-    const bikeExist = bikeId.some((item) => item.id === id);
+    const bikeExist = await bikeODM.getById(id);
     if (!bikeExist) throw new HttpException('Motorcycle not found', 404);
     
     const motorcycleUpdate = await bikeODM.update(id, bike);

@@ -39,8 +39,7 @@ export default class CarService {
     if (!isValidObjectId(id)) throw new HttpException('Invalid mongo id', 422);
     
     const carODM = new CarODM();
-    const carId = await carODM.getAll();
-    const carExist = carId.some((item) => item.id === id);
+    const carExist = await carODM.getById(id);
     if (!carExist) throw new HttpException('Car not found', 404);
     
     const carUpdate = await carODM.update(id, car);
