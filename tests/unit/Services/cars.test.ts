@@ -63,8 +63,15 @@ describe('Testa a rota /cars', function () {
       }
     });
 
-    it('', async function () {
-      sinon.stub().resolves();
+    it('Atualizar um carro com um id inválido', async function () {
+      sinon.stub(Model, 'findById').resolves(false);
+
+      try {
+        const service = new CarService();
+        await service.updateCar(id, carUpdate);
+      } catch (error) {
+        expect((error as Error).message).to.be.equal('Car not found');
+      }
     });
   });
 });
