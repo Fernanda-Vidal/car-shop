@@ -53,7 +53,7 @@ export default class CarService {
 
     const carODM = new CarODM();
     const { deletedCount } = await carODM.delete(id);
-
+    
     if (deletedCount < 1) throw new HttpException(NOT_FOUND, 404);
   }
 }
