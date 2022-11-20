@@ -4,6 +4,8 @@ import IMotorcycle from '../Interfaces/IMotorcycle';
 import MotorcycleODM from '../Models/MotorcycleODM';
 import HttpException from '../utils/HttpException';
 
+const INVALID_ID = 'Invalid mongo id';
+const NOT_FOUND = 'Motorcycle not found';
 export default class MotorcycleService {
   private createCarDomain(bike: IMotorcycle | null): Motorcycle | null | undefined {
     if (bike) {
@@ -26,23 +28,32 @@ export default class MotorcycleService {
   }
 
   public async getById(id: string) {
-    if (!isValidObjectId(id)) throw new HttpException('Invalid mongo id', 422);
+    if (!isValidObjectId(id)) throw new HttpException(INVALID_ID, 422);
 
     const bikeODM = new MotorcycleODM();
     const motorcycle = await bikeODM.getById(id);
 
-    if (!motorcycle) throw new HttpException('Motorcycle not found', 404);
+    if (!motorcycle) throw new HttpException(NOT_FOUND, 404);
     return this.createCarDomain(motorcycle);
   }
 
   public async updateCar(id: string, bike: IMotorcycle) {
-    if (!isValidObjectId(id)) throw new HttpException('Invalid mongo id', 422);
+    if (!isValidObjectId(id)) throw new HttpException(INVALID_ID, 422);
     
     const bikeODM = new MotorcycleODM();
     const bikeExist = await bikeODM.getById(id);
-    if (!bikeExist) throw new HttpException('Motorcycle not found', 404);
+    if (!bikeExist) throw new HttpException(NOT_FOUND, 404);
     
     const motorcycleUpdate = await bikeODM.update(id, bike);
     return this.createCarDomain(motorcycleUpdate);
+  }
+
+  public async delete(id: string) {
+    if (!isValidObjectId(id)) throw new HttpException(INVALID_ID, 422);
+
+    const bikeODM = new MotorcycleODM();
+    const { deletedCount } = await bikeODM.delete(id);
+
+    if (deletedCount < 1) throw new HttpException(NOT_FOUND, 404);
   }
 }
