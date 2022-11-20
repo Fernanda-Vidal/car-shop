@@ -1,8 +1,10 @@
 import Motorcycle from '../../src/Domains/Motorcycle';
 import IMotorcycle from '../../src/Interfaces/IMotorcycle';
 
+const HONDA = 'Honda Cb 600f Hornet';
+
 export const bikeInput: IMotorcycle = {
-  model: 'Honda Cb 600f Hornet',
+  model: HONDA,
   year: 2005,
   color: 'Yellow',
   status: true,
@@ -13,7 +15,7 @@ export const bikeInput: IMotorcycle = {
   
 export const bikeOutput: Motorcycle = new Motorcycle({
   id: '63780048100ec2f0e8f854a4',
-  model: 'Honda Cb 600f Hornet',
+  model: HONDA,
   year: 2005,
   color: 'Yellow',
   status: true,
@@ -24,7 +26,7 @@ export const bikeOutput: Motorcycle = new Motorcycle({
 
 export const bikeList: IMotorcycle[] = [{
   id: '63780048100ec2f0e8f854a4',
-  model: 'Honda Cb 600f Hornet',
+  model: HONDA,
   year: 2005,
   color: 'Yellow',
   status: true,
