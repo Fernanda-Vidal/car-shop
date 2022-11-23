@@ -10,7 +10,7 @@ routes.delete(
 
 routes.put(
   '/:id',
-  (req, res, next) => new CarController(req, res, next).updateCar(),
+  (req, res, next) => new CarController(req, res, next).update(),
 );
   
 routes.get(

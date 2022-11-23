@@ -4,7 +4,7 @@ import HttpException from '../utils/HttpException';
 
 const INVALID_ID = 'Invalid mongo id';
 
-export default class AbstractService<I, D> {
+export default abstract class AbstractService<I, D> {
   private model: AbstractODM<I>;
   private modelName: string;
 
