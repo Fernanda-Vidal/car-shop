@@ -13,7 +13,7 @@ describe('Testa a rota /motorcycles', function () {
     sinon.stub(Model, 'create').resolves(bikeOutput);
       
     const service = new MotorcycleService();
-    const result = await service.addCar(bikeInput);
+    const result = await service.create(bikeInput);
       
     expect(result).to.be.deep.equal(bikeOutput);
   });
@@ -55,7 +55,7 @@ describe('Testa a rota /motorcycles', function () {
       sinon.stub(Model, 'findByIdAndUpdate').resolves(bikeList[3]);
   
       const service = new MotorcycleService();
-      const result = await service.updateCar(id, motoUpdate);
+      const result = await service.update(id, motoUpdate);
   
       expect(result).to.be.deep.equal(bikeList[3]);
     });
@@ -65,7 +65,7 @@ describe('Testa a rota /motorcycles', function () {
   
       try {
         const service = new MotorcycleService();
-        await service.updateCar(id, motoUpdate);
+        await service.update(id, motoUpdate);
       } catch (error) {
         expect((error as Error).message).to.be.equal('Motorcycle not found');
       }
