@@ -18,7 +18,7 @@ export default class MotorcycleController {
     const bike = this.req.body;
 
     try {
-      const motorcycle = await this.service.addCar(bike);
+      const motorcycle = await this.service.create(bike);
       return this.res.status(201).json(motorcycle);
     } catch (error) {
       this.next(error);
@@ -49,7 +49,7 @@ export default class MotorcycleController {
     const { id } = this.req.params;
 
     try {
-      const motorcycleUpdate = await this.service.updateCar(id, this.req.body);
+      const motorcycleUpdate = await this.service.update(id, this.req.body);
       return this.res.status(200).json(motorcycleUpdate);
     } catch (error) {
       this.next(error);

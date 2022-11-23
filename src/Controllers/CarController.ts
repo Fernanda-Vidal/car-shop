@@ -18,7 +18,7 @@ export default class CarController {
     const car = this.req.body;
 
     try {
-      const newCar = await this.service.addCar(car);
+      const newCar = await this.service.create(car);
       return this.res.status(201).json(newCar);
     } catch (error) {
       this.next(error);
@@ -49,7 +49,7 @@ export default class CarController {
     const { id } = this.req.params;
 
     try {
-      const carUpdate = await this.service.updateCar(id, this.req.body);
+      const carUpdate = await this.service.update(id, this.req.body);
       return this.res.status(200).json(carUpdate);
     } catch (error) {
       this.next(error);

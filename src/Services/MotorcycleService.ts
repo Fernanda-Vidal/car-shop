@@ -1,59 +1,16 @@
-import { isValidObjectId } from 'mongoose';
+// import { isValidObjectId } from 'mongoose';
+// import Motorcycle from '../Domains/Motorcycle';
+// import IMotorcycle from '../Interfaces/IMotorcycle';
+// import MotorcycleODM from '../Models/MotorcycleODM';
+// import HttpException from '../utils/HttpException';
+
 import Motorcycle from '../Domains/Motorcycle';
 import IMotorcycle from '../Interfaces/IMotorcycle';
 import MotorcycleODM from '../Models/MotorcycleODM';
-import HttpException from '../utils/HttpException';
+import AbstractService from './AbstractService';
 
-const INVALID_ID = 'Invalid mongo id';
-const NOT_FOUND = 'Motorcycle not found';
-export default class MotorcycleService {
-  private createCarDomain(bike: IMotorcycle | null): Motorcycle | null | undefined {
-    if (bike) {
-      return new Motorcycle(bike);
-    }
-    return null;
-  }
-
-  public async addCar(bike: IMotorcycle) {
-    const bikeODM = new MotorcycleODM();
-    const newBike = await bikeODM.create(bike);
-    return this.createCarDomain(newBike);
-  }
-
-  public async getAll() {
-    const bikeODM = new MotorcycleODM();
-    const getAllMotos = await bikeODM.getAll();
-    const motorcycle = getAllMotos.map((bike) => this.createCarDomain(bike));
-    return motorcycle;
-  }
-
-  public async getById(id: string) {
-    if (!isValidObjectId(id)) throw new HttpException(INVALID_ID, 422);
-
-    const bikeODM = new MotorcycleODM();
-    const motorcycle = await bikeODM.getById(id);
-
-    if (!motorcycle) throw new HttpException(NOT_FOUND, 404);
-    return this.createCarDomain(motorcycle);
-  }
-
-  public async updateCar(id: string, bike: IMotorcycle) {
-    if (!isValidObjectId(id)) throw new HttpException(INVALID_ID, 422);
-    
-    const bikeODM = new MotorcycleODM();
-    const bikeExist = await bikeODM.getById(id);
-    if (!bikeExist) throw new HttpException(NOT_FOUND, 404);
-    
-    const motorcycleUpdate = await bikeODM.update(id, bike);
-    return this.createCarDomain(motorcycleUpdate);
-  }
-
-  public async delete(id: string) {
-    if (!isValidObjectId(id)) throw new HttpException(INVALID_ID, 422);
-
-    const bikeODM = new MotorcycleODM();
-    const { deletedCount } = await bikeODM.delete(id);
-
-    if (deletedCount < 1) throw new HttpException(NOT_FOUND, 404);
+export default class MotorcycleService extends AbstractService <IMotorcycle, Motorcycle> {
+  constructor() {
+    super(MotorcycleODM, Motorcycle, 'Motorcycle');
   }
 }
